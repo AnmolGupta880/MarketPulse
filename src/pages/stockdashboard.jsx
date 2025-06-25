@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchStockPrice, fetchStockNews, fetchStockHistory } from '../utils/stockapi';
-import StockCard from '../components/StockCard';
-import StockCardWrapper from '../components/StockCardWrapper';
+import stockCard from '../components/stockCard';
+import stockCardWrapper from '../components/stockCardWrapper';
 import gsap from 'gsap';
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
