@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchStockPrice, fetchStockNews, fetchStockHistory } from '../utils/stockapi';
-import StockCard from '../components/stockCard';
-import StockCardWrapper from '../components/stockCardWrapper';
+import StockCard from '../components/StockCard';
+import StockCardWrapper from '../components/StockCardWrapper';
+
 
 import gsap from 'gsap';
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
