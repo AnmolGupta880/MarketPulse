@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchStockPrice, fetchStockNews, fetchStockHistory } from '../utils/stockapi';
 import StockCard from '../components/StockCard';
+
 import StockCardWrapper from '../components/StockCardWrapper';
 
 
