@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/navbar';
-import StockDashboard from './pages/StockDashboard';
+import StockDashboard from './pages/stockDashboard';
 import Footer from './components/footer';
 
 function App() {
