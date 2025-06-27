@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/navbar';            
-import StockDashboard from './pages/stockdashboard'; 
+import StockDashboard from './pages/StockDashboard'; 
 import Footer from './components/footer';            
 
 
