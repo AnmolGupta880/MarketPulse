@@ -1,14 +1,8 @@
 import React from 'react';
-<<<<<<< HEAD
 import Navbar from './components/navbar';            
-import StockDashboard from './pages/StockDashboard'; 
+import StockDashboard from './pages/stockdashboard'; 
 import Footer from './components/footer';            
 
-=======
-import Navbar from './components/navbar';
-import StockDashboard from './pages/stockDashboard';
-import Footer from './components/footer';
->>>>>>> e50915cdc80eedcc1a4326cc7d9fe444b00b2f07
 
 function App() {
   return (
