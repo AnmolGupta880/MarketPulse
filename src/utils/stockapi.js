@@ -1,66 +1,62 @@
-import axios from 'axios';
+import axios from "axios";
 
-// Financial Modeling Prep API
-const FMP_API_KEY = '3VAkTPWIZlUdzUSV2hv8ttygo8M3lgti';
-const FMP_BASE_URL = 'https://financialmodelingprep.com/api/v3';
+const MARKETSTACK_KEY = "1b4e0f592d20a770218f256aca609a61";
+const GNEWS_KEY = "d2477148ca2f4e0ab8b3875e1efd938c";
 
-// NewsData.io API
-const NEWSDATA_API_KEY = '0lEhTcRKSkTEYeLkQCmwpFFnFDJDQFLbMgG4pZxy';
-const NEWSDATA_BASE_URL = 'https://newsdata.io/api/1/news';
-
-/**
- * Get live stock quote
- */
 export const fetchStockPrice = async (symbol) => {
   try {
-    const res = await axios.get(`${FMP_BASE_URL}/quote/${symbol}?apikey=${FMP_API_KEY}`);
-    const data = res.data[0];
+    const res = await axios.get("http://api.marketstack.com/v1/eod/latest", {
+      params: {
+        access_key: MARKETSTACK_KEY,
+        symbols: symbol,
+      },
+    });
+
+    const d = res.data.data?.[0];
+    if (!d) return null;
+
     return {
-      symbol: data.symbol,
-      price: data.price,
-      change: data.change,
+      symbol: d.symbol,
+      price: d.close,
+      change: d.change,
     };
-  } catch (err) {
-    console.error('Error fetching stock price:', err);
+  } catch {
     return null;
   }
 };
 
-/**
- * Get latest news using NewsData.io
- */
-export const fetchStockNews = async (symbol) => {
+export const fetchStockHistory = async (symbol) => {
   try {
-    const res = await axios.get(`${NEWSDATA_BASE_URL}`, {
+    const res = await axios.get("http://api.marketstack.com/v1/eod", {
       params: {
-        apikey: NEWSDATA_API_KEY,
-        q: symbol,
-        language: 'en',
-        category: 'business',
+        access_key: MARKETSTACK_KEY,
+        symbols: symbol,
+        limit: 5,
       },
     });
 
-    if (!res.data.results || res.data.results.length === 0) {
-      return [`No news found for ${symbol}`];
-    }
-
-    return res.data.results.slice(0, 5).map((news) => news.title);
-  } catch (err) {
-    console.error('Error fetching news:', err.message);
-    return [`Failed to load news for ${symbol}`];
+    return res.data.data.map((d) => ({
+      date: d.date.split("T")[0],
+      close: d.close,
+    }));
+  } catch {
+    return [];
   }
 };
 
-/**
- * Get historical price data for a stock
- */
-export const fetchStockHistory = async (symbol) => {
+export const fetchStockNews = async (symbol) => {
   try {
-    const res = await axios.get(`${FMP_BASE_URL}/historical-price-full/${symbol}?serietype=line&apikey=${FMP_API_KEY}`);
-    const history = res.data.historical?.slice(0, 5) || [];
-    return history.map((day) => `${day.date}: ₹${day.close}`);
-  } catch (err) {
-    console.error('Error fetching stock history:', err);
-    return ['Failed to fetch history.'];
+    const res = await axios.get("https://gnews.io/api/v4/search", {
+      params: {
+        q: symbol,
+        token: GNEWS_KEY,
+        lang: "en",
+        max: 5,
+      },
+    });
+
+    return res.data.articles.map((a) => a.title);
+  } catch {
+    return [];
   }
 };
